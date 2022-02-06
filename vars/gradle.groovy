@@ -6,9 +6,7 @@
 def call(stages){
 
     def listStages = stages.split(";")
-    listStages.each{
-        println("===> ${it}")
-    }
+
     def listStagesOrder = [
         'build': 'stageCleanBuildTest',
         'sonar': 'stageSonar',
