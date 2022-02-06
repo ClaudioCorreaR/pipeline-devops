@@ -25,14 +25,14 @@ def call(stages){
     } else {
         echo 'Stages a ejecutar :' + stages
         listStagesOrder.each { stageName, stageFunction ->
-        listStages.each{ stageToExecute ->
-            if(stageName.equals(stageToExecute)){
-            println( 'Ejecutando ' + stageFunction)
-              "${stageFunction}"()
-             }
+            listStages.each{ stageToExecute ->
+                if(stageName.equals(stageToExecute)){
+                    println( 'Ejecutando ' + stageFunction)
+                    "${stageFunction}"()
+                }
             }
         }
-    }
+    
 
     }
 
