@@ -20,7 +20,7 @@ def call(){
 	        stage("Pipeline"){
 	            steps {
 	                script{
-	                	println("stages: " + stages)
+	                	println("stages: " + params.stages)
 	                	sh "env"
 	                	env.TAREA = ""
 	                  switch(params.compileTool)
