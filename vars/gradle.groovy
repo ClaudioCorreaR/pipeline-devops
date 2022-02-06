@@ -1,28 +1,23 @@
 
 def call(){
-    def stagesList = stages.split(";")
-    stagesList.each{
-        println("Stages enviados ===> ${it}")
-    }
-
     env.TAREA = "Paso 1: Build && Test"
-    stage($"env.TAREA"){
+    stage("$env.TAREA"){
         sh "gradle clean build"
     }
     env.TAREA = "Paso 2: Sonar - Análisis Estático"
-    stage($"env.TAREA"){
+    stage("$env.TAREA"){
         sh "echo 'Análisis Estático!'"
         withSonarQubeEnv('sonarqube') {
             sh 'gradle sonarqube -Dsonar.projectKey=maven-gradle -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=9d886284c574229ebc1bf5b9051c6dbbd8063e16 -Dsonar.java.binaries=build'
         }
     }
     env.TAREA = "Paso 3: Curl Springboot Gradle sleep 20"
-    stage($"env.TAREA"){
+    stage("$env.TAREA"){
         sh "gradle bootRun&"
         sh "sleep 20 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
     }
     env.TAREA = "Paso 4: Subir Nexus"
-    stage($"env.TAREA"){
+    stage("$env.TAREA"){
         nexusPublisher nexusInstanceId: 'nexus',
         nexusRepositoryId: 'devops-usach-nexus',
         packages: [
@@ -43,15 +38,15 @@ def call(){
         ]
     }
     env.TAREA = "Paso 5: Descargar Nexus"
-    stage($"env.TAREA"){
+    stage("$env.TAREA"){
         sh ' curl -X GET -u $NEXUS_USER:$NEXUS_PASSWORD "http://nexus:8081/repository/devops-usach-nexus/com/devopsusach2020/DevOpsUsach2020/0.1.2/DevOpsUsach2020-0.1.2.jar" -O'
     }
     env.TAREA = "Paso 6: Levantar Artefacto Jar"
-    stage($"env.TAREA"){
+    stage("$env.TAREA"){
         sh 'nohup bash java -jar DevOpsUsach2020-0.1.2.jar & >/dev/null'
     }
     env.TAREA = "Paso 7: Testear Artefacto - Dormir(Esperar 20sg) "
-    stage($"env.TAREA"){
+    stage("$env.TAREA"){
         sh "sleep 20 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
     }
 }
