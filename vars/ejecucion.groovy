@@ -20,15 +20,16 @@ def call(){
 	        stage("Pipeline"){
 	            steps {
 	                script{
+	                	println("stages: " + stages)
 	                	sh "env"
 	                	env.TAREA = ""
 	                  switch(params.compileTool)
 	                    {
 	                        case 'Maven':
-	                            maven.call()
+	                            maven.call("")
 	                        break;
 	                        case 'Gradle':
-	                            gradle.call()
+	                            gradle.call("")
 	                        break;
 	                    }
 	                }
