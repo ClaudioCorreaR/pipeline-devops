@@ -5,7 +5,7 @@
 */
 def call(){
     stage("Paso 1: Build && Test"){
-        sh "kjhjkhjkh"
+        sh "gradle clean build"
     }
     stage("Paso 2: Sonar - Análisis Estático"){
         sh "echo 'Análisis Estático!'"
