@@ -1,9 +1,3 @@
-/*
-	forma de invocación de método call:
-	def ejecucion = load 'script.groovy'
-	ejecucion.call()
-*/
-
 def call(){
   
 	pipeline {
@@ -18,21 +12,22 @@ def call(){
 	            choices: ['Maven', 'Gradle'],
 	            description: 'Seleccione herramienta de compilacion'
 	        )
+	        text(
+	        	description: 'Enviar los stages separados por ";"... Vacío si necesita todos los stages', name: 'stages'
+	        )
 	    }
 	    stages {
 	        stage("Pipeline"){
 	            steps {
 	                script{
+	                	sh "env"
+	                	env.TAREA = ""
 	                  switch(params.compileTool)
 	                    {
 	                        case 'Maven':
-	                            //def ejecucion = load 'maven.groovy'
-	                            //ejecucion.call()
 	                            maven.call()
 	                        break;
 	                        case 'Gradle':
-	                            //def ejecucion = load 'gradle.groovy'
-	                            //ejecucion.call()
 	                            gradle.call()
 	                        break;
 	                    }
