@@ -5,7 +5,7 @@
 */
 def call(stages){
 
-    def stagesList = stages.split{";"}
+    def stagesList = stages.split(";")
     stagesList.each{
         println("===> ${it}")
     }
