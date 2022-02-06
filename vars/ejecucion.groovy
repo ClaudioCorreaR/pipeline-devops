@@ -22,7 +22,7 @@ def call(){
 	                script{
 	                	println("stages: " + params.stages)
 	                	sh "env"
-	                	env.TAREA = ""
+	                	env.DESCRTIPTION_STAGE = ""
 	                  switch(params.compileTool)
 	                    {
 	                        case 'Maven':
@@ -39,7 +39,7 @@ def call(){
 	                    slackSend (color: 'good', message: "[Claudio Correa] [${JOB_NAME}] [${BUILD_TAG}] Ejecucion Exitosa", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'TOKEN-SLACK')
 	                }
 	                failure{
-	                    slackSend (color: 'danger', message: "[Claudio Correa] [${env.JOB_NAME}] [${BUILD_TAG}] Ejecucion fallida en stage [${env.TAREA}]", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'TOKEN-SLACK')
+	                    slackSend (color: 'danger', message: "[Claudio Correa] [${env.JOB_NAME}] [${BUILD_TAG}] Ejecucion fallida en stage [${env.DESCRTIPTION_STAGE}]", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'TOKEN-SLACK')
 	                }
 	            }
 	        }
